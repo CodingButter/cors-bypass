@@ -4,11 +4,15 @@ var app = express();
 
 app.get("/", function (req, res) {
   const { url } = req.query;
-  fetch(url)
-    .then((response) => response.text())
-    .then((data) => {
-      res.json(data);
-    });
+  if (url) {
+    fetch(url)
+      .then((response) => response.text())
+      .then((data) => {
+        res.json(data);
+      });
+  } else {
+    res.json({ error: "url", message: "Must provide url" });
+  }
 });
 
 var server = app.listen(8000, function () {
